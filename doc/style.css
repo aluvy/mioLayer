@@ -75,8 +75,8 @@ ul[class*="_type"] p + p { margin-top: 0.4rem; }
 .miolayer { position: fixed; inset: 0; z-index: 99; }
 .miolayer .row { width: 100%; height: 100%; }
 .miolayer .col { display: flex; align-items: center; justify-content: center; }
-.miolayer .col_dim { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); user-select: none; }
-.miolayer .ly_in { position: relative; border-radius: 2rem; background: #fff; box-shadow: 2rem 2rem 2rem rgba(0, 0, 0, 0.2); }
+.miolayer .col_dim { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); user-select: none; will-change: transform; }
+.miolayer .ly_in { position: relative; border-radius: 2rem; background: #fff; box-shadow: 2rem 2rem 2rem rgba(0, 0, 0, 0.2); will-change: transform; }
 
 /* modal open */
 .miolayer.open .ly_in { animation: modalOpen 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) backwards; }
