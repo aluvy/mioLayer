@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mioLayer</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="mioLayer.js"></script>
+  <script src="front.js"></script>
+</head>
+<body>
+<div id="wrap">
+
+  <div id="lnb">
+    <ul>
+      <li><a href="#lnb-rule">Rule</a></li>
+      <li><a href="#lnb-how">How to use</a></li>
+      <li><a href="#lnb-options">Options</a></li>
+      <li><a href="#lnb-sample">Sample</a></li>
+    </ul>
+  </div>
+
+  <div id="content">
+
+    <section>
+      <h1>mioLayer</h1>
+    </section>
+
+    <section id="lnb-rule">
+      <h2 class="section-h2">Rule</h2>
+
+      <h4 class="section-h4">아이디 규칙</h4>
+      <ul class="dot_type mt12">
+        <li>
+          아이디는 페이지 내에 유일해야 한다.<br>
+          <strong>EX) MIOLAYER</strong>
+        </li>
+        <li>
+          버튼의 아이디는 <code class="code">${아이디-BTN}</code>로 한다.<br>
+          <strong>EX) MIOLAYER-BTN</strong>
+        </li>
+        <li>
+          생성된 모달의 ID는 <code class="code">#{아이디}-MD</code>로 자동 부여된다.<br>
+          <strong>EX) #MIOLAYER-MD</strong>
+        </li>
+        <li>
+          생성된 모달의 ID가 없을 경우 (마크업 없이 호출 시) <strong class="fc_blue">.miolayer</strong>에 ID값으로 <code class="code">#MIOLAYER-MD</code>가 부여된다.
+        </li>
+      </ul>
+
+      <h4 class="section-h4 mt36">버튼</h4>
+      <ul class="dot_type mt12">
+        <li>
+          모달 내 기능 버튼에는 <code class="code">data-action</code> 속성을 부여한다.
+
+          <ul class="dash_type mt12">
+            <li>
+              <strong class="fc_blue">close</strong> : 모달 닫기
+            </li>
+            <li>
+              <strong class="fc_blue">confirm</strong> : 모달옵션 중 <code class="code">fn.confirm()</code> 함수 실행
+            </li>
+            <li>
+              <strong class="fc_blue">cancel</strong> : 모달옵션 중 <code class="code">fn.cancel()</code> 함수 실행
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="tip-block mt36">
+        &lt;button type="button" class="btn secondary" <strong class="fc_green">data-action="close"</strong>&gt;닫기&lt;/&button&gt;<br>
+        &lt;button type="button" class="btn secondary" <strong class="fc_green">data-action="confirm"</strong>&gt;확인&lt;/&button&gt;<br>
+        &lt;button type="button" class="btn secondary" <strong class="fc_green">data-action="cancel"</strong>&gt;취소&lt;/&button&gt;<br>
+      </div>
+    </section>
+
+    <section id="lnb-how">
+      <h2 class="section-h2">How to use</h2>
+
+      <h4 class="section-h4">HTML</h4>
+<pre class="hljs-wrap"><code class="language-html">
+<!-- button -->
+<button type="button" id="MIOLAYER-BTN" class="btn primary" aria-haspopup="dialog">mioLayer</button>
+
+<!-- layer -->
+<div id="MIOLAYER" class="layerHTML">
+  <div class="ly_cnt">
+    <div class="section">contents</div>
+  </div>
+  <div class="ly_btn">
+    <div class="btn_area">
+      <button type="button" class="btn secondary" data-action="close">레이어 닫기</button>
+    </div>
+  </div>
+</div>
+</code></pre>
+
+      <h4 class="section-h4">javascript</h4>
+<pre class="hljs-wrap"><code class="language-javascript">
+$.mioLayer({
+  type: 'layer',
+  title: '알림',
+  displayTitle: true,
+  displayCloseButton: true,
+  dimAction: true,
+  content:'#MIOLAYER',
+  displayBottomButtons: true,
+  buttons: [
+    `<button type="button" class="btn secondary" data-action="close">닫기</button>`,
+    `<button type="button" class="btn secondary" data-action="confirm">취소</button>`,
+    `<button type="button" class="btn primary" data-action="confirm">확인</button>`,
+  ],
+  fn: {
+    confirm(ins) {
+      // data-action="confirm" 클릭 시 실행
+      ins.fn.close(ins);  // 해당 모달창 닫기
+    },
+    cancel(ins) {
+      // data-action="cancel" 클릭 시 실행
+    }
+  }
+});
+</code></pre>
+    </section>
+
+    <section id="lnb-options">
+      <h2 class="section-h2">Options</h2>
+      <ul class="dot_type">
+        <li>
+          <code class="code">type</code>: 모달 타입 - <strong class="fc_green">[ 'layer' | 'confirm' | 'alert' ]</strong> - default: <strong>'layer'</strong>
+        </li>
+        <li>
+          <code class="code">title</code>: 모달 타이틀 - default: <strong></strong>"알림"</strong>
+        </li>
+        <li>
+          <code class="code">displayTitle</code>: 타이틀 노출 여부 - <strong class="fc_green">[ true | false ]</strong> - default: <strong>true</strong>
+        </li>
+        <li>
+          <code class="code">displayCloseButton</code>: 닫기 버튼 노출 여부 - <strong class="fc_green">[ true | false ]</strong> - default: <strong>true</strong>
+        </li>
+        <li>
+          <code class="code">dimAction</code>: dim 클릭 시 모달창 닫기 실행 여부 - <strong class="fc_green">[ true | false ]</strong> - default: <strong>true</strong>
+        </li>
+        <li>
+          <code class="code">content</code>: 모달 컨텐츠 - <strong class="fc_green">[ "element ID" | String ]</strong>
+          <ul class="dash_type mt12">
+            <li>
+              <code class="code">element id</code>: 모달 엘리먼트 ID
+            </li>
+            <li>
+              <code class="code">String</code>: 텍스트
+            </li>
+          </ul>
+        </li>
+        <li>
+          <code class="code">displayBottomButtons</code>: 하단 버튼 영역 노출 여부 - <strong class="fc_green">[ true | false ]</strong> - default: <strong>false</strong>
+        </li>
+        <li>
+          <code class="code">buttons</code>: 하단 버튼 영역 버튼 목록 - <strong class="fc_green">[ array ]</strong>
+          <ul class="dash_type mt12">
+            <li>
+              버튼 샘플: <code class="code">&lt;button type="button" class="btn secondary" data-action="close"&gt;닫기&lt;/&button&gt;</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <code class="code">fn</code>: 콜백함수
+          <ul class="dash_type mt12">
+            <li>
+              <code class="code">confirm()</code>: data-action="confirm" 클릭 시 실행, parameter로 instance를 받는다.
+            </li>
+            <li>
+              <code class="code">cancel()</code>: data-action="cancel" 클릭 시 실행, parameter로 instance를 받는다.
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="tip-block mt36">
+        <strong>fn.confirm()</strong>, <strong>fn.cancel()</strong> 함수에서 모달창 닫기를 실행하고 싶은 경우 각 함수 내에서 <code class="code">ins.fn.close(ins)</code> 를 호출한다.
+      </div>
+    </section>
+
+    <section id="lnb-sample">
+      <h2 class="section-h2">Sample</h2>
+
+      <h3 class="section-h3">Layer</h3>
+      <div class="btn_area mt12">
+        <button type="button" id="LY-A0001-BTN" class="btn primary" aria-haspopup="dialog">기본 호출 (LY-A0001)</button>
+        <button type="button" id="LY-A0002-BTN" class="btn primary" aria-haspopup="dialog">자바스크립트 옵션 처리 - 버튼</button>
+      </div>
+      <div class="btn_area mt8">
+        <button type="button" id="LY-A0003-BTN" class="btn secondary" aria-haspopup="dialog">마크업 없이 호출</button>
+      </div>
+
+      <h3 class="section-h3 mt36">Confirm</h3>
+      <div class="btn_area mt12">
+        <button type="button" id="LY-B0001-BTN" class="btn primary" aria-haspopup="dialog">기본 호출 (LY-A0001)</button>
+        <button type="button" id="LY-B0002-BTN" class="btn primary" aria-haspopup="dialog">자바스크립트 옵션 처리 - 버튼</button>
+        <button type="button" id="LY-B0003-BTN" class="btn primary" aria-haspopup="dialog">마크업 없이 호출</button>
+      </div>
+      <div class="btn_area mt8">
+        <button type="button" id="LY-B0004-BTN" class="btn secondary" aria-haspopup="dialog">타이틀 없는 컨펌 타입</button>
+        <button type="button" id="LY-B0005-BTN" class="btn secondary" aria-haspopup="dialog">하단 버튼 없는 컨펌 타입</button>
+      </div>
+
+      <h3 class="section-h3 mt36">Alert</h3>
+      <div class="btn_area mt12">
+        <button type="button" id="LY-C0001-BTN" class="btn primary" aria-haspopup="dialog">알럿 타입</button>
+        <button type="button" id="LY-C0002-BTN" class="btn primary" aria-haspopup="dialog">타이틀 없는 알럿 타입</button>
+      </div>
+
+      <ul class="dot_type mt36">
+        <li>
+          모달 호출 시 <code class="code">.miolayer</code> 클래스에 <code class="code">.layer</code>, <code class="code">.confirm</code>, <code class="code">.alert</code> 클래스가 부여된다.
+        </li>
+        <li>
+          <strong class="fc_blue">기본 호출</strong>
+          <ul class="dash_type mt8">
+            <li>마크업 그대로 호출</li>
+          </ul>
+        </li>
+        <li>
+          <strong class="fc_blue">버튼 JS 옵션 호출</strong>
+          <ul class="dash_type mt8">
+            <li>버튼 정보를 자바스크립트 <code class="code">$.mioLayer()</code> 에 옵션 값으로 호출</li>
+          </ul>
+        </li>
+        <li>
+          <strong class="fc_blue">마크업 없이 호출</strong>
+          <ul class="dash_type mt8">
+            <li>자바스크립트 <code class="code">$.mioLayer()</code> 옵션 값으로 호출</li>
+            <li><code class="code">content</code> 옵션에 텍스트 값을 넣어준다.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+  </div>
+</div>
+
+
+
+<!-- layer -->
+<div id="LY-A0001" class="layerHTML">
+  <div class="ly_cnt">
+    <div class="section desc">
+      <p>공영방송이자 국가기간방송인 KBS는 국민에게 신뢰할 수 있는 정보를 제공할 책무를 지니고 있습니다.</p>
+      <p>특히, 다매체 다채널 시대 정보의 홍수 속에서 KBS는 어느 한쪽에 치우치지 않고 객관적인 사실에 기초해 공정하고 정확한 뉴스 프로그램을 제작하는 데 역점을 두고 있습니다.</p>
+    </div>
+    <hr class="hr">
+    <div class="section">
+      <p>오류코드 <strong>BF1039</strong></p>
+      <p>고객센터 0000-1234</p>
+    </div>
+    <hr class="hr">
+    <div class="section">
+      <p>[data-action="close"] 가 아닌 다른 버튼에서도 모달을 닫고 싶은 경우</p>
+      <p>ins.fn.close(ins) 를 호출한다.</p>
+    </div>
+  </div>
+  <div class="ly_btn">
+    <div class="btn_area">
+      <button type="button" class="btn secondary" data-action="cancel">취소 눌렀는데 닫고 싶을 때</button>
+      <button type="button" class="btn primary" data-action="confirm">모달 중복 호출</button>
+    </div>
+  </div>
+</div>
+<!-- //layer -->
+
+
+<div id="LY-A0002" class="layerHTML">
+  <div class="ly_cnt">
+    <div class="section">
+      <p>아래 버튼 영역은 Javascript 옵션으로 처리 되었습니다.</p>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- layer confirm -->
+<div id="LY-B0002" class="layerHTML">
+  <div class="ly_cnt">
+    <div class="section desc center fs18">
+      <p class="fs18">
+        <span class="fc_red">검색하신 결과가 없습니다.</span><br>
+        다시 검색해 주세요.
+      </p>
+    </div>
+  </div>
+</div>
+<!-- //layer alert -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</body>
+</html>
