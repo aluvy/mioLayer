@@ -26,7 +26,7 @@ let $ = {};
 
   _w.mioLayer.prototype = {
     init() {
-      this.timer = 210; // CSS animation
+      this.timer = 500; // CSS animation
       this.$container = document.querySelector('[data-scroll-body]');
       this.open();
     },
@@ -54,6 +54,7 @@ let $ = {};
       document.body.appendChild(this.$el);
 
       this.$miolayer = this.$el.closest('.miolayer');
+      this.$dimmed = this.$el.querySelector('.dimmed');
       this.$layer = this.$el.querySelector('.ly_in');
       this.$hd = this.$el.querySelector('.ly_hd');
       this.$title = this.$el.querySelector('.ly_hd h1');
@@ -97,6 +98,7 @@ let $ = {};
       }, this.timer);
       this.$el.setAttribute("aria-hidden", false);
 
+      this.setAnimation('open');
       this.setEvent();
     },
     setContent() {
@@ -167,8 +169,7 @@ let $ = {};
       });
       
       // dim click action
-      const $dim = _this.$el.querySelector(".col_dim");
-      $dim.addEventListener("click", () => {
+      _this.$dimmed.addEventListener("click", () => {
         if( _this.dimAction === true ){
           _this.close(_this);
         }
@@ -196,8 +197,7 @@ let $ = {};
       })
     },
     close(_this) {
-      _this.$miolayer.classList.remove("open");
-      _this.$miolayer.classList.add("close");
+      _this.setAnimation('close');
       _this.$lastFocusedElement.classList.remove("active");
 
       setTimeout(()=>{
@@ -228,6 +228,43 @@ let $ = {};
 
       }, _this.timer);
     },
+    setAnimation(type) {
+      switch(type) {
+        case 'open':
+          this.$miolayer.classList.add("open");
+          this.$layer.classList.add("miolayer-transition-enter");
+          this.$dimmed.classList.add("dimmed-transition-enter");
+          
+          setTimeout(()=>{
+            this.$layer.classList.remove("miolayer-transition-enter");
+            this.$dimmed.classList.remove("dimmed-transition-enter");
+
+            this.$layer.classList.add("miolayer-transition-enter-to");
+            this.$dimmed.classList.add("dimmed-transition-enter-to");
+          }, 300);
+
+          setTimeout(()=>{
+            this.$layer.classList.remove("miolayer-transition-enter-to");
+            this.$dimmed.classList.remove("dimmed-transition-enter-to");
+          }, 600);
+
+          break;
+        case 'close':
+          this.$layer.classList.add("miolayer-transition-leave");
+          this.$dimmed.classList.add("dimmed-transition-leave");
+
+          setTimeout(()=>{
+            this.$layer.classList.remove("miolayer-transition-leave");
+            this.$dimmed.classList.remove("dimmed-transition-leave");
+
+            this.$layer.classList.add("miolayer-transition-leave-to");
+            this.$dimmed.classList.add("dimmed-transition-leave-to");
+          }, 300);
+
+          break;
+        default:
+      }
+    },
     setScrollDisabled(Boolean) {
       if (Boolean) {
         this.$container.setAttribute("data-scroll", "disabled");
@@ -246,10 +283,10 @@ let $ = {};
   _w.miolayer.options = {
     originHTML: '',
     template: `
-      <div class="miolayer open">
+      <div class="miolayer">
         <div class="row">
           <div class="col">
-            <div class="col_dim"></div>
+            <div class="dimmed"></div>
             <div class="ly_in" role="dialog" aria-label="알림" aria-modal="true">
               <div class="ly_hd"><h1 class="modal_h1">알림</h1></div>
               <div class="ly_con"></div>
