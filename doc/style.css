@@ -1,47 +1,11 @@
-:root {
-  --ico-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none'%3E%3Cpath stroke='%23222' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m18.999 5-14 14M5.001 5 19 19'/%3E%3C/svg%3E");
-}
 
-/* hljs */
-.hljs-wrap { display: block; font-size: 1.4rem; font-weight: 400; line-height: 0; color: #abb2bf; margin: 0.85em 0; overflow: auto; }
-.hljs-wrap * { font-family: "Fira Code", Sans-serif; line-height: 1.5; }
-.hljs-wrap code.hljs { display: block; tab-size: 4; overflow-x: auto; padding: 1rem 1.6rem; background: #282c34; border-radius: 0.6rem; overflow: auto; }
-.hljs-wrap .hljs-comment,
-.hljs-wrap .hljs-quote { color: #5c6370; font-style: italic; }
-.hljs-wrap .hljs-doctag,
-.hljs-wrap .hljs-formula,
-.hljs-wrap .hljs-keyword { color: #c678dd; }
-.hljs-wrap .hljs-deletion,
-.hljs-wrap .hljs-name,
-.hljs-wrap .hljs-section,
-.hljs-wrap .hljs-selector-tag,
-.hljs-wrap .hljs-subst { color: #e06c75; }
-.hljs-wrap .hljs-literal { color: #56b6c2; }
-.hljs-wrap .hljs-addition,
-.hljs-wrap .hljs-attribute,
-.hljs-wrap .hljs-meta .hljs-string,
-.hljs-wrap .hljs-regexp,
-.hljs-wrap .hljs-string { color: #98c379; }
-.hljs-wrap .hljs-attr,
-.hljs-wrap .hljs-number,
-.hljs-wrap .hljs-selector-attr,
-.hljs-wrap .hljs-selector-class,
-.hljs-wrap .hljs-selector-pseudo,
-.hljs-wrap .hljs-template-variable,
-.hljs-wrap .hljs-type,
-.hljs-wrap .hljs-variable { color: #d19a66; }
-.hljs-wrap .hljs-bullet,
-.hljs-wrap .hljs-link,
-.hljs-wrap .hljs-meta,
-.hljs-wrap .hljs-selector-id,
-.hljs-wrap .hljs-symbol,
-.hljs-wrap .hljs-title { color: #61aeee; }
-.hljs-wrap .hljs-built_in,
-.hljs-wrap .hljs-class .hljs-title,
-.hljs-wrap .hljs-title.class_ { color: #e6c07b; }
-.hljs-wrap .hljs-emphasis { font-style: italic; }
-.hljs-wrap .hljs-strong { font-weight: 700; }
-.hljs-wrap .hljs-link { text-decoration: underline; }
+.blind,
+.hidden { position: absolute; clip: rect(0 0 0 0); width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; white-space: nowrap; }
+
+/* scroll */
+#wrap { position: relative; width: 100%; height: 100%; overflow-y: scroll; scroll-behavior: smooth; }
+#wrap[data-scroll="disabled"] { position: relative; height: auto; scroll-behavior: initial; }
+#wrap[data-scroll="wait"] { scroll-behavior: initial; }
 
 /* common */
 #wrap { position: relative; padding-left: 32rem; }
@@ -85,6 +49,7 @@
 .mt16 { margin-top: 1.6rem;}
 .mt24 { margin-top: 2.4rem;}
 .mt36 { margin-top: 3.6rem;}
+.mt48 { margin-top: 4.8rem;}
 
 /* align */
 .center { text-align: center; }
