@@ -27,7 +27,7 @@ let $ = {};
   _w.mioLayer.prototype = {
     init() {
       this.timer = 210; // CSS animation
-      this.$container = document.querySelector('#wrap');
+      this.$container = document.querySelector('[data-scroll-body]');
       this.open();
     },
     open() {
@@ -36,26 +36,15 @@ let $ = {};
       // other modal check
       if (miolayer.instances.length !== 0) {
         const $previousElement = this.$miolayer.previousElementSibling;
-        setTimeout(()=>{
-          $previousElement.setAttribute("aria-hidden", true);
-        }, this.timer);
+        this.$layer.focus();
+        $previousElement.setAttribute("aria-hidden", true);
 
       } else {
-        setTimeout(()=>{
-          this.$container.setAttribute("aria-hidden", true);
-        }, this.timer);
-
-        this.$container.style.top = `${this.scrollY * -1}px`;
-        this.$container.style.position = "relative";
-
-        document.body.classList.add("noScroll");
-        document.querySelector('html').classList.add("noScroll");
-      }
-      
-      setTimeout(()=>{
+        
         this.$layer.focus();
-      }, this.timer);
-
+        this.$container.setAttribute("aria-hidden", true);
+        if (this.scrollDisabled) this.setScrollDisabled(true);
+      }
     },
     buildHTML() {
       // create DOM element
@@ -70,7 +59,7 @@ let $ = {};
       this.$title = this.$el.querySelector('.ly_hd h1');
       this.$con = this.$el.querySelector('.ly_con');
       this.$closeBtn = this.$el.querySelector('.btn_modal_close');
-      this.scrollY = scrollY;
+      this.scrollY = this.$container.scrollTop;
       this.$lastFocusedElement = document.activeElement;
       this.lastFocusedId = this.$lastFocusedElement.getAttribute("id");
 
@@ -220,14 +209,8 @@ let $ = {};
           $previousElement.setAttribute("aria-hidden", false);
           
         } else {
-          _this.$container.style.top = '';
-          _this.$container.style.position = '';
           _this.$container.removeAttribute('aria-hidden');
-
-          document.body.classList.remove("noScroll");
-          document.querySelector('html').classList.remove("noScroll");
-          
-          scrollY = _this.scrollY;
+          if (_this.scrollDisabled) _this.setScrollDisabled(false);
         }
 
         try {
@@ -244,6 +227,18 @@ let $ = {};
         });
 
       }, _this.timer);
+    },
+    setScrollDisabled(Boolean) {
+      if (Boolean) {
+        this.$container.setAttribute("data-scroll", "disabled");
+        this.$container.style.top = `${this.scrollY * -1}px`;
+
+      } else {
+        this.$container.setAttribute('data-scroll', 'wait'); // scroll-behavior: initial;
+        this.$container.style.top = '';
+        this.$container.scrollTop = this.scrollY;
+        this.$container.removeAttribute('data-scroll');
+      }
     }
   };
 
@@ -282,6 +277,7 @@ let $ = {};
       close(ins) {
         Object.getPrototypeOf(ins).close(ins);
       }
-    }
+    },
+    scrollDisabled: true,
   };
 })();
