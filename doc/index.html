@@ -4,13 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>mioLayer</title>
+  <link rel="stylesheet" href="hljs.css">
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="style.css">
   <script src="mioLayer.js"></script>
   <script src="front.js"></script>
 </head>
 <body>
-<div id="wrap">
+<div id="wrap" data-scroll-body>
 
   <div id="lnb">
     <ul>
@@ -30,7 +31,21 @@
     <section id="lnb-rule">
       <h2 class="section-h2">Rule</h2>
 
-      <h4 class="section-h4">아이디 규칙</h4>
+      <h3 class="section-h3">스크롤 영역</h3>
+      <ul class="dot_type mt12">
+        <li>
+          스크롤 되는 영역에 <code class="code">data-scroll-body</code> 속성을 부여한다.
+        </li>
+        <li>
+          모달 오픈 시 <code class="code">scrollDisabled</code> 옵션에 따라 스크롤 영역이 비활성화 된다.
+        </li>
+      </ul>
+      <div class="tip-block mt24">
+        이 예제에서는 body의 첫 번째 자식인 <code class="code">#wrap</code>이 스크롤된다.<br>
+        <strong>EX) &lt;div id="wrap" <span class="fc_green">data-scroll-body</span>&gt;</strong>
+      </div>
+
+      <h3 class="section-h3 mt48">모달 아이디</h3>
       <ul class="dot_type mt12">
         <li>
           아이디는 페이지 내에 유일해야 한다.<br>
@@ -49,7 +64,7 @@
         </li>
       </ul>
 
-      <h4 class="section-h4 mt36">버튼</h4>
+      <h3 class="section-h3 mt48">모달 내 버튼 이벤트</h3>
       <ul class="dot_type mt12">
         <li>
           모달 내 기능 버튼에는 <code class="code">data-action</code> 속성을 부여한다.
@@ -67,8 +82,7 @@
           </ul>
         </li>
       </ul>
-
-      <div class="tip-block mt36">
+      <div class="tip-block mt24">
         &lt;button type="button" class="btn secondary" <strong class="fc_green">data-action="close"</strong>&gt;닫기&lt;/&button&gt;<br>
         &lt;button type="button" class="btn secondary" <strong class="fc_green">data-action="confirm"</strong>&gt;확인&lt;/&button&gt;<br>
         &lt;button type="button" class="btn secondary" <strong class="fc_green">data-action="cancel"</strong>&gt;취소&lt;/&button&gt;<br>
@@ -80,8 +94,11 @@
 
       <h4 class="section-h4">HTML</h4>
 <pre class="hljs-wrap"><code class="language-html">
-<!-- button -->
-<button type="button" id="MIOLAYER-BTN" class="btn primary" aria-haspopup="dialog">mioLayer</button>
+<!-- scroll area: #wrap -->
+<div id="wrap" data-scroll-body>
+  <!-- button -->
+  <button type="button" id="MIOLAYER-BTN" class="btn primary" aria-haspopup="dialog">mioLayer</button>
+</div>
 
 <!-- layer -->
 <div id="MIOLAYER" class="layerHTML">
@@ -119,7 +136,8 @@ $.mioLayer({
     cancel(ins) {
       // data-action="cancel" 클릭 시 실행
     }
-  }
+  },
+  scrollDisabled: 'disabled'
 });
 </code></pre>
     </section>
@@ -174,6 +192,9 @@ $.mioLayer({
               <code class="code">cancel()</code>: data-action="cancel" 클릭 시 실행, parameter로 instance를 받는다.
             </li>
           </ul>
+        </li>
+        <li>
+          <code class="code">scrollDisabled</code>: 스크롤 비활성화 여부 - <strong class="fc_green">[ true | false ]</strong> - default: <strong>true</strong>
         </li>
       </ul>
 
