@@ -75,16 +75,16 @@ ul[class*="_type"] p + p { margin-top: 0.4rem; }
 .miolayer { position: fixed; inset: 0; z-index: 99; }
 .miolayer .row { width: 100%; height: 100%; }
 .miolayer .col { display: flex; align-items: center; justify-content: center; }
-.miolayer .col_dim { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); user-select: none; will-change: transform; }
-.miolayer .ly_in { position: relative; border-radius: 2rem; background: #fff; box-shadow: 2rem 2rem 2rem rgba(0, 0, 0, 0.2); will-change: transform; }
+.miolayer .col_dim { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); user-select: none;  will-change: opacity; }
+.miolayer .ly_in { position: relative; border-radius: 2rem; background: #fff; box-shadow: 2rem 2rem 2rem rgba(0, 0, 0, 0.2); will-change: transform, opacity; }
 
 /* modal open */
-.miolayer.open .ly_in { animation: modalOpen 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) backwards; }
-.miolayer.open .col_dim { animation: fadeIn 0.1s cubic-bezier(0.165, 0.84, 0.44, 1) backwards; }
+.miolayer.open .ly_in { animation: modalOpen 0.2s var(--timing-function) backwards; }
+.miolayer.open .col_dim { animation: fadeIn 0.1s var(--timing-function) backwards; }
 
 /* modal close */
-.miolayer.close .ly_in { animation: modalClose 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
-.miolayer.close .col_dim { animation: fadeOut 0.1s 0.1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
+.miolayer.close .ly_in { animation: modalClose 0.2s var(--timing-function) forwards; }
+.miolayer.close .col_dim { animation: fadeOut 0.1s 0.1s var(--timing-function) forwards; }
 
 @keyframes modalOpen {
   0% { opacity: 0; transform: scale(0.6); }
@@ -108,8 +108,6 @@ ul[class*="_type"] p + p { margin-top: 0.4rem; }
 
 .miolayer .ly_hd .modal_h1 { font-size: 2.4rem; font-weight: 700; padding: 4rem 9rem 2rem 4rem; }
 .miolayer .btn_modal_close { position: absolute; right: 4rem; top: 4rem; width: 4rem; height: 4rem; border-radius: 0.8rem; background: var(--ico-close) center / 3.2rem auto no-repeat; color: #fff; transition: transform 0.2s ease-in-out; }
-.miolayer .btn_modal_close:hover,
-.miolayer .btn_modal_close:focus { transform: rotate(180deg); }
 
 .miolayer .ly_in.no-hd .ly_hd { display: none; }
 .miolayer .ly_in.no-hd .ly_con { padding-top: 4rem; }
