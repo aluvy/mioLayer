@@ -104,7 +104,7 @@ table.border-type thead td { font-weight: 700;}
 .miolayer { display: none; }
 .miolayer.open { display: block; }
 .miolayer.close { display: block; }
-.miolayer .ly_in { transition: 0.3s var(--timing-function); }
+.miolayer .ly_in { transition: 0.4s var(--timing-function); }
 .miolayer .dimmed { transition: 0.4s var(--timing-function); }
 /* modal - animation - dimmed */
 .miolayer .dimmed[data-transition="enter"],
