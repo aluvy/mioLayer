@@ -123,6 +123,39 @@ const LAYER = {
         content: `검색 결과가 없습니다.<br><strong class="fc_red">타이틀</strong>도 없습니다.`,
       });
     }
+  },
+
+  bottom: {
+    D0001() {
+      $.mioLayer({
+        type: 'bottom',
+        title: "오류코드 안내 - bottom",
+        content:'#LY-A0001',
+        fn: {
+          cancel(ins) {
+            ins.fn.close(ins);
+          },
+          confirm(ins) {
+            LAYER.confirm.B0003();
+          },
+        }
+      });
+    },
+    D0002() {
+      $.mioLayer({
+        type: 'fullscreen',
+        title: "오류코드 안내 - fullscreen",
+        content:'#LY-A0001',
+        fn: {
+          cancel(ins) {
+            ins.fn.close(ins);
+          },
+          confirm(ins) {
+            LAYER.confirm.B0003();
+          },
+        }
+      });
+    }
   }
   
 }
@@ -141,6 +174,10 @@ window.addEventListener('load', ()=>{
   
   document.querySelector("#LY-C0001-BTN").addEventListener("click", LAYER.alert.C0001);
   document.querySelector("#LY-C0002-BTN").addEventListener("click", LAYER.alert.C0002);
+
+  document.querySelector("#LY-D0001-BTN").addEventListener("click", LAYER.bottom.D0001);
+  document.querySelector("#LY-D0002-BTN").addEventListener("click", LAYER.bottom.D0002);
+  
 });
 
 // code

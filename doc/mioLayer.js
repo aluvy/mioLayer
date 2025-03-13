@@ -232,33 +232,29 @@ let $ = {};
       switch(type) {
         case 'open':
           this.$miolayer.classList.add("open");
-          this.$layer.classList.add("miolayer-transition-enter");
-          this.$dimmed.classList.add("dimmed-transition-enter");
+
+          this.$layer.setAttribute("data-transition", "enter");
+          this.$dimmed.setAttribute("data-transition", "enter");
           
           setTimeout(()=>{
-            this.$layer.classList.remove("miolayer-transition-enter");
-            this.$dimmed.classList.remove("dimmed-transition-enter");
+            this.$layer.setAttribute("data-transition", "enter-to");
+            this.$dimmed.setAttribute("data-transition", "enter-to");
 
-            this.$layer.classList.add("miolayer-transition-enter-to");
-            this.$dimmed.classList.add("dimmed-transition-enter-to");
           }, 300);
 
           setTimeout(()=>{
-            this.$layer.classList.remove("miolayer-transition-enter-to");
-            this.$dimmed.classList.remove("dimmed-transition-enter-to");
+            this.$layer.removeAttribute("data-transition");
+            this.$dimmed.removeAttribute("data-transition");
           }, 600);
 
           break;
         case 'close':
-          this.$layer.classList.add("miolayer-transition-leave");
-          this.$dimmed.classList.add("dimmed-transition-leave");
+          this.$layer.setAttribute("data-transition", "leave");
+          this.$dimmed.setAttribute("data-transition", "leave");
 
           setTimeout(()=>{
-            this.$layer.classList.remove("miolayer-transition-leave");
-            this.$dimmed.classList.remove("dimmed-transition-leave");
-
-            this.$layer.classList.add("miolayer-transition-leave-to");
-            this.$dimmed.classList.add("dimmed-transition-leave-to");
+            this.$layer.setAttribute("data-transition", "leave-to");
+            this.$dimmed.setAttribute("data-transition", "leave-to");
           }, 300);
 
           break;
