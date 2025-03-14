@@ -26,7 +26,7 @@ let $ = {};
 
   _w.mioLayer.prototype = {
     init() {
-      this.timer = 500; // CSS animation
+      this.timer = 400; // CSS animation
       this.$container = document.querySelector('[data-scroll-body]');
       this.open();
     },
@@ -39,10 +39,13 @@ let $ = {};
         this.$layer.focus();
         $previousElement.setAttribute("aria-hidden", true);
 
+
+
       } else {
         
         this.$layer.focus();
         this.$container.setAttribute("aria-hidden", true);
+        this.scrollY = this.$container.scrollTop;
         if (this.scrollDisabled) this.setScrollDisabled(true);
       }
     },
@@ -60,7 +63,7 @@ let $ = {};
       this.$title = this.$el.querySelector('.ly_hd h1');
       this.$con = this.$el.querySelector('.ly_con');
       this.$closeBtn = this.$el.querySelector('.btn_modal_close');
-      this.scrollY = this.$container.scrollTop;
+      
       this.$lastFocusedElement = document.activeElement;
       this.lastFocusedId = this.$lastFocusedElement.getAttribute("id");
 
@@ -151,21 +154,21 @@ let $ = {};
       $closeButton.forEach( el => {
         el.addEventListener("click", ()=>{
           _this.close(_this);
-        });
+        }, { once : true });
       });
 
       const $confirmButton = _this.$el.querySelectorAll("[data-action='confirm']");
       $confirmButton.forEach( el => {
         el.addEventListener("click", ()=>{
           _this.fn.confirm(_this);
-        });
+        }, { capture : true });
       });
 
       const $cancelButton = _this.$el.querySelectorAll("[data-action='cancel']");
       $cancelButton.forEach( el => {
         el.addEventListener("click", ()=>{
           _this.fn.cancel(_this);
-        });
+        }, { capture : true });
       });
       
       // dim click action
@@ -173,7 +176,7 @@ let $ = {};
         if( _this.dimAction === true ){
           _this.close(_this);
         }
-      });
+      }, { once : true });
 
       _this.$layer.addEventListener("keydown", (e)=>{
         // tab
@@ -240,12 +243,12 @@ let $ = {};
             this.$layer.setAttribute("data-transition", "enter-to");
             this.$dimmed.setAttribute("data-transition", "enter-to");
 
-          }, 300);
+          }, 0);
 
           setTimeout(()=>{
             this.$layer.removeAttribute("data-transition");
             this.$dimmed.removeAttribute("data-transition");
-          }, 600);
+          }, 0);
 
           break;
         case 'close':
@@ -255,7 +258,7 @@ let $ = {};
           setTimeout(()=>{
             this.$layer.setAttribute("data-transition", "leave-to");
             this.$dimmed.setAttribute("data-transition", "leave-to");
-          }, 300);
+          }, 0);
 
           break;
         default:
@@ -267,10 +270,12 @@ let $ = {};
         this.$container.style.top = `${this.scrollY * -1}px`;
 
       } else {
-        this.$container.setAttribute('data-scroll', 'wait'); // scroll-behavior: initial;
+        if (!this.scrollY) return;
+
+        this.$container.removeAttribute('data-scroll');
         this.$container.style.top = '';
         this.$container.scrollTop = this.scrollY;
-        this.$container.removeAttribute('data-scroll');
+        
       }
     }
   };

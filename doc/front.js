@@ -10,7 +10,7 @@ const LAYER = {
             ins.fn.close(ins);
           },
           confirm(ins) {
-            LAYER.confirm.B0003();
+            LAYER.confirm.B0002();
           },
         }
       });
@@ -64,11 +64,11 @@ const LAYER = {
         content:'#LY-B0002',
         buttons: [
           `<button type="button" class="btn secondary" data-action="close">닫기</button>`,
-          `<button type="button" class="btn primary" data-action="close">확인</button>`,
+          `<button type="button" class="btn primary" data-action="confirm">확인</button>`,
         ],
         fn: {
           confirm(ins) {
-            LAYER.confirm.A0003();
+            LAYER.confirm.B0003();
           },
           cancel(ins) {
             ins.fn.close(ins);
