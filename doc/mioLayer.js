@@ -39,10 +39,7 @@ let $ = {};
         this.$layer.focus();
         $previousElement.setAttribute("aria-hidden", true);
 
-
-
-      } else {
-        
+      } else {        
         this.$layer.focus();
         this.$container.setAttribute("aria-hidden", true);
         this.scrollY = this.$container.scrollTop;
@@ -85,7 +82,8 @@ let $ = {};
           this.$miolayer.setAttribute("id", `${this.content}-MD`);
         }
       } catch (e) {
-        this.$miolayer.setAttribute("id", `MIOLAYER-MD`);
+        const idx = miolayer.instances.length;
+        this.$miolayer.setAttribute("id", `MIOLAYER-MD-${idx}`);
       }
 
       if(this.displayTitle === false) this.$layer.classList.add("no-hd");
